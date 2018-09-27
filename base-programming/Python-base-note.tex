@@ -1,0 +1,1803 @@
+\documentclass[12pt]{ctexart}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{\textbf{\LARGE{Python编程基础学习笔记}}}
+    \author{Cheng Jun}
+    \date{\today}
+    
+    
+\usepackage{xeCJK}
+\setCJKmainfont{思源宋体 CN}[BoldFont = 思源宋体 CN Bold]
+\setCJKsansfont{思源黑体 CN}
+\setmainfont{思源宋体 CN}[BoldFont = 思源宋体 CN Bold]
+\setsansfont{思源黑体 CN}
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      pdfauthor={Cheng Jun},
+            pdftitle={Python编程基础学习笔记},
+            pdfsubject={编程与开发},
+            pdfkeywords={Python，编程，笔记},
+            pdfproducer={LaTeX},
+            pdfcreator={XeLaTeX}
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+
+    \begin{document}
+    
+    
+    \maketitle
+    \tableofcontents
+    \clearpage
+    
+    
+
+    
+    \hypertarget{ux524dux8a00}{%
+\section{前言}\label{ux524dux8a00}}
+
+    \hypertarget{ux7b14ux8bb0ux4f5cux8005}{%
+\subsection{笔记作者}\label{ux7b14ux8bb0ux4f5cux8005}}
+
+实证研究小⻘年，日常研究和关注经济、金融与会计等领域的问题，主要采用计量经济学和其他数据分析手法撰写学术论
+文和研究报告。研究之余，泛读文史哲，关注自由与开源动态。在日常研究和工作中，喜欢选用自由和开源工具，喜欢使用最新的软件工具。
+
+邮箱：cheng081@qq.com
+
+Github：https://github.com/chengjun90
+
+欢迎交流。
+
+    \hypertarget{ux7b14ux8bb0ux76eeux7684}{%
+\subsection{笔记目的}\label{ux7b14ux8bb0ux76eeux7684}}
+
+本学习笔记主要为\sout{特定领域的数据科学}（实证研究）服务，力求\textbf{简明够用即可}，用于构建知识体系，快速浏览全局。
+
+更多的细节都是干中搜:
+
+\begin{itemize}
+\tightlist
+\item
+  直接谷歌、百度
+\item
+  查找Python官方手册
+\end{itemize}
+
+    \hypertarget{pythonux7b80ux4ecb}{%
+\subsection{Python简介}\label{pythonux7b80ux4ecb}}
+
+Python是非常简洁易懂的通用编程语言。Python适应于多个应用领域，在数据科学、机器学习和深度学习等领域得到广泛的应用。
+
+Python代码简洁、易读，上手快。缺点之一是性能不如C/C++等语言。
+
+    \hypertarget{ux7b14ux8bb0ux7684ux7cfbux7edfux73afux5883}{%
+\subsection{笔记的系统环境}\label{ux7b14ux8bb0ux7684ux7cfbux7edfux73afux5883}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{sys}
+        \PY{k+kn}{import} \PY{n+nn}{platform}
+        \PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{操作系统：}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{platform.platform()\PYZcb{};Python版本：}\PY{l+s+si}{\PYZob{}sys.version[0:5]\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}1}]:} '操作系统：Windows-10-10.0.17134-SP0;Python版本：3.7.0'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{core}\PY{n+nn}{.}\PY{n+nn}{interactiveshell} \PY{k}{import} \PY{n}{InteractiveShell}
+        \PY{n}{InteractiveShell}\PY{o}{.}\PY{n}{ast\PYZus{}node\PYZus{}interactivity} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{all}\PY{l+s+s2}{\PYZdq{}}
+\end{Verbatim}
+
+    \hypertarget{ux53d8ux91cfux4e0eux6570ux636eux7c7bux578b}{%
+\section{变量与数据类型}\label{ux53d8ux91cfux4e0eux6570ux636eux7c7bux578b}}
+
+    \hypertarget{ux53d8ux91cf}{%
+\subsection{变量}\label{ux53d8ux91cf}}
+
+Python是动态类型，赋值时无需声明类型。
+变量可以看作名称（id）与值的关联。
+
+    \hypertarget{ux6280ux5de7}{%
+\subsubsection{技巧}\label{ux6280ux5de7}}
+
+    解包
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hi}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{a}
+        \PY{n}{b}
+        \PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{哈哈}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{呵呵}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+        \PY{n}{a}
+        \PY{n}{b}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} 'h'
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} 'i'
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} '哈哈'
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} '呵呵'
+\end{Verbatim}
+            
+    多个变量赋值
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{c}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{呵呵}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{喝喝}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{哈哈}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{a}
+        \PY{n}{b}
+        \PY{n}{c}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} '呵呵'
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} '喝喝'
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} '哈哈'
+\end{Verbatim}
+            
+    交换值
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{a}\PY{o}{=}\PY{l+m+mi}{1}
+        \PY{n}{b}\PY{o}{=}\PY{l+m+mi}{2}
+        \PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{o}{=}\PY{n}{b}\PY{p}{,}\PY{n}{a}
+        \PY{n}{a}
+        \PY{n}{b}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} 2
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} 1
+\end{Verbatim}
+            
+    \hypertarget{ux57faux672cux6570ux636eux7c7bux578b}{%
+\subsection{基本数据类型}\label{ux57faux672cux6570ux636eux7c7bux578b}}
+
+    \hypertarget{ux6570ux503c}{%
+\subsubsection{数值}\label{ux6570ux503c}}
+
+整型int和浮点型float。
+
+高精度使用decimal模块。
+
+Python内置对复数的计算，对复数处理的数学函数在模块cmath中。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n+nb}{type}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n+nb}{type}\PY{p}{(}\PY{l+m+mf}{1.1}\PY{p}{)}
+        \PY{n+nb}{type}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{+}\PY{l+m+mi}{2}\PY{n}{j}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} int
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} float
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} complex
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{p}{(}\PY{l+m+mi}{1}\PY{o}{+}\PY{l+m+mi}{2}\PY{n}{j}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{+}\PY{l+m+mi}{3}\PY{n}{j}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:} (-4+7j)
+\end{Verbatim}
+            
+    \hypertarget{ux5b57ux7b26}{%
+\subsubsection{字符}\label{ux5b57ux7b26}}
+
+Python中字符串不可修改，只能生成新的字符串。
+
+字符串可以使用单引号、双引号来标记。字符串是多行的时候使用三引号。
+
+    字符串格式化，直接使用f方法好了。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c+c1}{\PYZsh{} printf style}
+        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{我喜欢}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{, 学习了}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{年}\PY{l+s+s1}{\PYZsq{}}\PY{o}{\PYZpc{}}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}8}]:} '我喜欢python, 学习了3年'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} format方法}
+        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{我喜欢}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{, 学习了}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{年}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}
+        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{我喜欢}\PY{l+s+si}{\PYZob{}a\PYZcb{}}\PY{l+s+s1}{, 学习了}\PY{l+s+si}{\PYZob{}b\PYZcb{}}\PY{l+s+s1}{年}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{b}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,}\PY{n}{a}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{python}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} '我喜欢python, 学习了3年'
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} '我喜欢python, 学习了3年'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{} f方法}
+         \PY{n}{a}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Python}\PY{l+s+s2}{\PYZdq{}}
+         \PY{n}{b}\PY{o}{=}\PY{l+m+mi}{3}
+         \PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{我喜欢}\PY{l+s+si}{\PYZob{}a\PYZcb{}}\PY{l+s+s1}{, 学习了}\PY{l+s+si}{\PYZob{}b\PYZcb{}}\PY{l+s+s1}{年}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:} '我喜欢Python, 学习了3年'
+\end{Verbatim}
+            
+    \hypertarget{ux903bux8f91ux503c}{%
+\subsubsection{逻辑值}\label{ux903bux8f91ux503c}}
+
+逻辑值仅包括True/False两个,用来配合if/while等语句做条件判断,其它数据类型可以转换为逻辑值。
+
+标准的布尔运算符为and , or, not。
+
+    \hypertarget{ux57faux672cux6570ux636eux7c7bux578bux8f6cux6362}{%
+\subsection{基本数据类型转换}\label{ux57faux672cux6570ux636eux7c7bux578bux8f6cux6362}}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+方法 & 说明\tabularnewline
+\midrule
+\endhead
+int(x{[},base{]}) & 将x转换为一个整数\tabularnewline
+float(x) & 将x转换到一个浮点数\tabularnewline
+complex(real{[},imag{]}) & 创建一个复数\tabularnewline
+str(x) & 将对象x转换为字符串\tabularnewline
+repr(x) & 将对象x转换为表达式字符串\tabularnewline
+eval(str) &
+用来计算在字符串中的有效Python表达式,并返回一个对象\tabularnewline
+tuple(s) & 将序列s转换为一个元组\tabularnewline
+list(s) & 将序列s转换为一个列表\tabularnewline
+chr(x) & 将一个整数转换为一个字符\tabularnewline
+unichr(x) & 将一个整数转换为Unicode字符\tabularnewline
+ord(x) & 将一个字符转换为它的整数值\tabularnewline
+hex(x) & 将一个整数转换为一个十六进制字符串\tabularnewline
+oct(x) & 将一个整数转换为一个八进制字符串\tabularnewline
+\bottomrule
+\end{longtable}
+
+    \hypertarget{ux5b57ux8282ux548cunicode}{%
+\subsection{字节和Unicode}\label{ux5b57ux8282ux548cunicode}}
+
+在Python 3及以上版本中，字符串类型是Unicode编码。
+
+可以用encode将这个Unicode字符串编码为UTF-8：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{var}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{呵呵}\PY{l+s+s2}{\PYZdq{}}
+         \PY{n}{var}\PY{o}{.}\PY{n}{encode}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utf\PYZhy{}8}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n+nb}{type}\PY{p}{(}\PY{n}{var}\PY{o}{.}\PY{n}{encode}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utf\PYZhy{}8}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{n}{var}\PY{o}{.}\PY{n}{encode}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utf\PYZhy{}8}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{decode}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utf\PYZhy{}8}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} b'\textbackslash{}xe5\textbackslash{}x91\textbackslash{}xb5\textbackslash{}xe5\textbackslash{}x91\textbackslash{}xb5'
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} bytes
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} '呵呵'
+\end{Verbatim}
+            
+    \hypertarget{ux6570ux636eux7ed3ux6784}{%
+\section{数据结构}\label{ux6570ux636eux7ed3ux6784}}
+
+数据结构是用来存储一系列相关数据的集合。
+
+数据结构也可以称之为容器。Python提供了许多高效的容器类型，其中可以存储对象的集合。
+
+Python中有四种内置的数据结构：列表（List）、元组（Tuple）、字典（Dictionary）和集合（Set）。
+
+\begin{itemize}
+\tightlist
+\item
+  列表（list）：列表则可以删除、 添加、 替换、
+  重排序列中的元素。可变类型。列表是异质的，这意味着列表中的数据不必要同一个类。
+\item
+  元组（Tuple）：元组是不可变类型。
+\item
+  字典（Dictionary）：字典是通过键值key来索引元素value，而不是象列表是通过连续的整数来索引。字典是可变类型，可以添加、删除、替换元素。
+\item
+  集合：集合是不重复元素的无序组合。用set()创建空集，可用set()从其它序列转换生成集合。
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{mylist}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{123}\PY{p}{]}
+         \PY{n}{mylist}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} ['a', 'b', 'b', 123]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{mytuple}\PY{o}{=}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{123}\PY{p}{)}
+         \PY{n}{mytuple}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:} ('a', 'b', 'b', 123)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{mydict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{name}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{zhangsan}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{age}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}\PY{l+m+mi}{18}\PY{p}{\PYZcb{}}
+         \PY{n}{mydict}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} \{'name': 'zhangsan', 'age': 18\}
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{myset} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{\PYZcb{}}
+         \PY{n}{myset}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} \{1, 2, 3\}
+\end{Verbatim}
+            
+    Python 3.7引入了dataclass 。
+
+dataclass一个简单的数据容器，支持通过的对象属性进行访问。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{k+kn}{from} \PY{n+nn}{dataclasses} \PY{k}{import} \PY{n}{dataclass}
+         \PY{k+kn}{from} \PY{n+nn}{typing} \PY{k}{import} \PY{n}{Any}
+         
+         \PY{n+nd}{@dataclass}
+         \PY{k}{class} \PY{n+nc}{Student}\PY{p}{:}
+             \PY{n}{name}\PY{p}{:} \PY{n+nb}{str}
+             \PY{n}{age}\PY{p}{:} \PY{n+nb}{int}\PY{o}{=}\PY{l+m+mi}{18}
+             \PY{n}{score}\PY{p}{:} \PY{n}{Any}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}
+             
+             \PY{k}{def} \PY{n+nf}{level}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,}\PY{n}{hour}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{if} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{score}\PY{o}{/}\PY{n}{hour}\PY{o}{\PYZgt{}}\PY{l+m+mi}{1}\PY{p}{:}
+                     \PY{k}{return} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{优秀}\PY{l+s+s2}{\PYZdq{}}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{k}{return} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{其他}\PY{l+s+s2}{\PYZdq{}}
+                 
+         \PY{n}{lisi} \PY{o}{=} \PY{n}{Student}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{李四}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{score}\PY{o}{=}\PY{l+m+mf}{92.5}\PY{p}{)}
+         \PY{n}{lisi}\PY{o}{.}\PY{n}{level}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} '优秀'
+\end{Verbatim}
+            
+    \hypertarget{ux5224ux65adux4e0eux5faaux73af}{%
+\section{判断与循环}\label{ux5224ux65adux4e0eux5faaux73af}}
+
+    \hypertarget{ux5224ux65ad}{%
+\subsection{判断}\label{ux5224ux65ad}}
+
+if-elif-else语句
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{k+kn}{import} \PY{n+nn}{random}
+         \PY{n}{a}\PY{o}{=}\PY{n}{random}\PY{o}{.}\PY{n}{gauss}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+         
+         \PY{k}{if} \PY{n}{a}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{l+m+mf}{1.65}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{真大}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{k}{elif} \PY{n}{a}\PY{o}{\PYZgt{}}\PY{l+m+mi}{0}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{还行}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{k}{else}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{结束}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+结束
+
+    \end{Verbatim}
+
+    三元操作符是 if-else 语句也就是条件操作符的一个快捷方式：
+
+{[}表达式为真的返回值{]} if {[}表达式{]} else {[}表达式为假的返回值{]}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{a}\PY{o}{=}\PY{n}{random}\PY{o}{.}\PY{n}{gauss}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+         
+         \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{还行}\PY{l+s+s2}{\PYZdq{}} \PY{k}{if} \PY{n}{a}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{l+m+mi}{0} \PY{k}{else} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{结束}\PY{l+s+s2}{\PYZdq{}}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}18}]:} '还行'
+\end{Verbatim}
+            
+    \hypertarget{ux5faaux73af}{%
+\subsection{循环}\label{ux5faaux73af}}
+
+Python 提供了 for 循环和 while 循环。
+
+迭代循环for：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for} \OperatorTok{<}\NormalTok{变量}\OperatorTok{>} \KeywordTok{in} \OperatorTok{<}\NormalTok{可迭代对象}\OperatorTok{>}\NormalTok{:}
+    \OperatorTok{<}\NormalTok{语句块}\OperatorTok{>}
+    \ControlFlowTok{break} \CommentTok{#跳出循环}
+    \ControlFlowTok{continue} \CommentTok{#略过余下循环语句}
+\ControlFlowTok{else}\NormalTok{: }\CommentTok{#迭代完毕，则执行}
+    \OperatorTok{<}\NormalTok{语句块}\OperatorTok{>}
+\end{Highlighting}
+\end{Shaded}
+
+while：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{while}\NormalTok{ 条件:}
+\NormalTok{    语句块}
+    \ControlFlowTok{break} \CommentTok{# 跳出循环}
+    \ControlFlowTok{continue} \CommentTok{#跳出余下的语句块}
+\NormalTok{    语句块}
+\ControlFlowTok{else}\NormalTok{: }\CommentTok{#条件不满足则跳出，执行以下语句块}
+\NormalTok{    语句块}
+\end{Highlighting}
+\end{Shaded}
+
+控制循环的语句：
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+循环控制语句 & 描述\tabularnewline
+\midrule
+\endhead
+break & 在语句块执行过程中终止循环，并且跳出整个循环\tabularnewline
+continue &
+在语句块执行过程中终止当前循环，跳出该次循环，执行下一次循环\tabularnewline
+pass & pass 是空语句，是为了保持程序结构的完整性\tabularnewline
+\bottomrule
+\end{longtable}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{s}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{我的数据分析工具箱}\PY{l+s+s2}{\PYZdq{}}
+         \PY{k}{for}  \PY{n}{i} \PY{o+ow}{in} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{的箱}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+             \PY{k}{if} \PY{n}{i} \PY{o+ow}{in} \PY{n}{s}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+的
+箱
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{list1} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{这是}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{一个}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{测试}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{index}\PY{p}{,} \PY{n}{item} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{list1}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{index}\PY{p}{,} \PY{n}{item}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{index}\PY{p}{,} \PY{n}{item} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{list1}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{index}\PY{p}{,} \PY{n}{item}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0 这是
+1 一个
+2 测试
+100 这是
+101 一个
+102 测试
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{a}\PY{o}{=}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}
+         \PY{n}{b}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{c}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+         \PY{n}{c}\PY{o}{=}\PY{n+nb}{zip}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{)}
+         \PY{n}{c}
+         \PY{n+nb}{list}\PY{p}{(}\PY{n}{c}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{i}\PY{p}{,}\PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{i}\PY{p}{,}\PY{n}{j}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}21}]:} <zip at 0x1903cffcc88>
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}21}]:} [(1, 'a'), (2, 'b'), (3, 'c')]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+1 a
+2 b
+3 c
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{a}\PY{o}{=}\PY{l+m+mi}{4}
+         
+         \PY{k}{while} \PY{n}{a}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+             \PY{k}{if} \PY{n}{a}\PY{o}{\PYZlt{}}\PY{l+m+mi}{3}\PY{p}{:}
+                 \PY{k}{break}
+             \PY{n}{a}\PY{o}{=}\PY{n}{a}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+         \PY{k}{else}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{结束}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+4
+3
+2
+
+    \end{Verbatim}
+
+    \hypertarget{ux8fd0ux7b97ux7b26}{%
+\subsection{运算符：}\label{ux8fd0ux7b97ux7b26}}
+
+Python语言支持以下类型运算符：
+
+\begin{itemize}
+\tightlist
+\item
+  算术运算符
+\item
+  比较运算符
+\item
+  赋值运算符
+\item
+  逻辑运算符：not，and，or
+\item
+  成员操作符：in，not in
+\item
+  身份运算符：is
+\end{itemize}
+
+    \hypertarget{ux9ad8ux7ea7ux7279ux6027}{%
+\section{高级特性}\label{ux9ad8ux7ea7ux7279ux6027}}
+
+    \hypertarget{ux5207ux7247}{%
+\subsection{切片}\label{ux5207ux7247}}
+
+取一个list或tuple的部分元素是非常常见的操作。比如，一个list如下：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{L} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{c}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{e}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{L}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{:}\PY{l+m+mi}{4}\PY{p}{]}
+         
+         
+         \PY{n}{strs}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{取一个list或tuple的部分元素是非常常见的操作。}\PY{l+s+s2}{\PYZdq{}}
+         \PY{n}{strs}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{6}\PY{p}{:}\PY{p}{:}\PY{p}{]}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}23}]:} ['c', 'd']
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}23}]:} '常见的操作。'
+\end{Verbatim}
+            
+    \hypertarget{ux8fedux4ee3ux5668}{%
+\subsection{迭代器}\label{ux8fedux4ee3ux5668}}
+
+    \hypertarget{ux751fux6210ux5668}{%
+\subsection{生成器}\label{ux751fux6210ux5668}}
+
+可以节约内存。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{a}\PY{o}{=}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{]}
+         \PY{n}{a2}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{i} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{a}\PY{p}{)}
+         \PY{n}{a2}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{a2}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}24}]:} <generator object <genexpr> at 0x000001903CFEC840>
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+0
+2
+4
+6
+8
+10
+
+    \end{Verbatim}
+
+    \hypertarget{ux63a8ux5bfcux5f0f}{%
+\subsection{推导式}\label{ux63a8ux5bfcux5f0f}}
+
+可以生成list、dict和set。
+
+\begin{itemize}
+\tightlist
+\item
+  代码简洁
+\item
+  可读性强
+\end{itemize}
+
+{[}表达式 for 变量 in 可迭代对象 if 逻辑条件{]}
+
+\{键值表达式:元素表达式 for 变量 in 可迭代对象 if 逻辑条件\}
+
+\{元素表达式 for 变量 in 可迭代对象 if 逻辑条件\}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{a}\PY{o}{=}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{]}
+         \PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{100} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{a} \PY{k}{if} \PY{n}{i}\PY{o}{\PYZpc{}}\PY{k}{2}==0]
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}25}]:} [100, 102, 104]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{p}{\PYZob{}}\PY{n}{k}\PY{p}{:}\PY{n}{v} \PY{k}{for} \PY{n}{k}\PY{p}{,}\PY{n}{v} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{推导式}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}26}]:} \{'推': 0, '导': 1, '式': 2\}
+\end{Verbatim}
+            
+    \hypertarget{ux51fdux6570ux5f0fux7f16ux7a0b}{%
+\section{函数式编程}\label{ux51fdux6570ux5f0fux7f16ux7a0b}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{k}{def} \PY{n+nf}{mysum}\PY{p}{(}\PY{n}{num1}\PY{p}{,}\PY{n}{num2}\PY{p}{)}\PY{p}{:}
+             \PY{n}{num}\PY{o}{=}\PY{n}{num1}\PY{o}{+}\PY{n}{num2}
+             \PY{k}{return} \PY{n}{num}
+         \PY{n}{mysum}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}27}]:} 3
+\end{Verbatim}
+            
+    通过上面的学习，可以知道通过return语句返回值。
+
+不带参数值的 return 语句返回 None。
+
+函数可以返回多个值。
+该函数其实只返回了一个对象，也就是一个元组，最后该元组会被拆包到各个结果变量中。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{k}{def} \PY{n+nf}{f}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{a} \PY{o}{=} \PY{l+m+mi}{5}
+             \PY{n}{b} \PY{o}{=} \PY{l+m+mi}{6}
+             \PY{n}{c} \PY{o}{=} \PY{l+m+mi}{7}
+             \PY{k}{return} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{c}
+         
+         \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{c} \PY{o}{=} \PY{n}{f}\PY{p}{(}\PY{p}{)}
+         \PY{n}{a}
+         \PY{n}{b}
+         \PY{n}{c}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}28}]:} 5
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}28}]:} 6
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}28}]:} 7
+\end{Verbatim}
+            
+    默认参数
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{k}{def} \PY{n+nf}{mysum}\PY{p}{(}\PY{n}{num1}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{num2}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+             \PY{n}{num}\PY{o}{=}\PY{n}{num1}\PY{o}{+}\PY{n}{num2}
+             \PY{k}{return} \PY{n}{num}
+         \PY{n}{mysum}\PY{p}{(}\PY{n}{num2}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}29}]:} 100
+\end{Verbatim}
+            
+    匿名函数
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x} \PY{o}{*} \PY{n}{x}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}30}]:} [1, 4, 9, 16]
+\end{Verbatim}
+            
+    此外还有
+
+\begin{itemize}
+\tightlist
+\item
+  作用域
+\item
+  闭包
+\item
+  装饰器
+\end{itemize}
+
+    \hypertarget{ux9762ux5411ux5bf9ux8c61ux7f16ux7a0b}{%
+\section{面向对象编程}\label{ux9762ux5411ux5bf9ux8c61ux7f16ux7a0b}}
+
+    Python中的所有事物都是以对象形式存在，从简单的数值类型，到复杂的代码模块，都是对象。
+
+同一个类（class）的对象具有相同的属性和方法。
+
+对象实现了属性和方法的封装，是一种数据抽象机制。
+
+面向对象三个特点：
+
+\begin{itemize}
+\tightlist
+\item
+  继承
+\item
+  多态
+\item
+  封装性
+\end{itemize}
+
+平时的分析场景不需要多少面向对象编程的地方，简单使用即可。属性+方法。
+
+    下面举一个例子，学生类型，和博士生子类型。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{k}{class} \PY{n+nc}{Student}\PY{p}{:}
+             \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n+nb}{id}\PY{p}{,} \PY{n}{score}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{id} \PY{o}{=} \PY{n+nb}{id}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{score} \PY{o}{=} \PY{n}{score}
+             \PY{k}{def} \PY{n+nf}{pressure}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{if} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{score}\PY{o}{\PYZgt{}}\PY{l+m+mi}{80}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{还不错}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{需要加油}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{k}{class} \PY{n+nc}{Phd}\PY{p}{(}\PY{n}{Student}\PY{p}{)}\PY{p}{:}
+             \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n+nb}{id}\PY{p}{,} \PY{n}{score}\PY{p}{,} \PY{n}{paper}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{Student}\PY{o}{.}\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n+nb}{id}\PY{p}{,} \PY{n}{score}\PY{p}{)}  
+                 \PY{c+c1}{\PYZsh{} 或super().\PYZus{}\PYZus{}init\PYZus{}\PYZus{}(id, score)}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{paper} \PY{o}{=} \PY{n}{paper}
+                 
+             \PY{k}{def} \PY{n+nf}{pressure}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{if} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{score}\PY{o}{\PYZgt{}}\PY{l+m+mi}{60}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{还不错}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{需要加油}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                 
+             \PY{k}{def} \PY{n+nf}{pressure\PYZus{}paper}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,}\PY{n}{number}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{if} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{paper}\PY{o}{==}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{and} \PY{n}{number}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{:}
+                     \PY{k}{return} \PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}self.id\PYZcb{}}\PY{l+s+s2}{发了}\PY{l+s+si}{\PYZob{}self.paper\PYZcb{}}\PY{l+s+s2}{刊共计}\PY{l+s+si}{\PYZob{}number\PYZcb{}}\PY{l+s+s2}{篇，可以参加预答辩了}\PY{l+s+s2}{\PYZdq{}}
+                 \PY{k}{elif} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{paper}\PY{o}{==}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{B}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{and} \PY{n}{number}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{:}
+                     \PY{k}{return} \PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}self.id\PYZcb{}}\PY{l+s+s2}{发了}\PY{l+s+si}{\PYZob{}self.paper\PYZcb{}}\PY{l+s+s2}{刊共计}\PY{l+s+si}{\PYZob{}number\PYZcb{}}\PY{l+s+s2}{篇，可以参加预答辩了}\PY{l+s+s2}{\PYZdq{}}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{k}{return} \PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}self.id\PYZcb{}}\PY{l+s+s2}{发了}\PY{l+s+si}{\PYZob{}self.paper\PYZcb{}}\PY{l+s+s2}{刊共计}\PY{l+s+si}{\PYZob{}number\PYZcb{}}\PY{l+s+s2}{篇，尚未达到预答辩条件}\PY{l+s+s2}{\PYZdq{}}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{n}{zhang3}\PY{o}{=}\PY{n}{Student}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{2018001}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{81}\PY{p}{)}
+         \PY{n}{zhang3}\PY{o}{.}\PY{n}{id}
+         \PY{n}{zhang3}\PY{o}{.}\PY{n}{score}
+         \PY{n}{zhang3}\PY{o}{.}\PY{n}{pressure}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}32}]:} '2018001'
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}32}]:} 81
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+还不错
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n}{li4}\PY{o}{=}\PY{n}{Phd}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{2018002}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+m+mi}{61}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{B}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{li4}\PY{o}{.}\PY{n}{id}
+         \PY{n}{li4}\PY{o}{.}\PY{n}{score}
+         \PY{n}{li4}\PY{o}{.}\PY{n}{paper}
+         \PY{n}{li4}\PY{o}{.}\PY{n}{pressure}\PY{p}{(}\PY{p}{)}
+         \PY{n}{li4}\PY{o}{.}\PY{n}{pressure\PYZus{}paper}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}33}]:} '2018002'
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}33}]:} 61
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}33}]:} 'B'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+还不错
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}33}]:} '2018002发了B刊共计2篇，可以参加预答辩了'
+\end{Verbatim}
+            
+    \hypertarget{ux6570ux636eux8bfbux5199}{%
+\section{数据读写}\label{ux6570ux636eux8bfbux5199}}
+
+    \hypertarget{ux7b80ux5355ux8f93ux5165ux548cux8f93ux51fa}{%
+\subsection{简单输入和输出}\label{ux7b80ux5355ux8f93ux5165ux548cux8f93ux51fa}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{n}{use\PYZus{}name}\PY{o}{=}\PY{n+nb}{input}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{请输入你的名字}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+请输入你的名字 cheng jun
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{n}{use\PYZus{}name}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}35}]:} 'cheng jun'
+\end{Verbatim}
+            
+    print(v1,v2,v3)打印各个变量
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{打印}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{各个变量}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+打印 各个变量
+
+    \end{Verbatim}
+
+    \hypertarget{ux57faux7840io}{%
+\subsection{基础IO}\label{ux57faux7840io}}
+
+\begin{itemize}
+\tightlist
+\item
+  open
+\item
+  read或者write
+\item
+  close
+\end{itemize}
+
+由于文件读写时都有可能产生IOError，所以还要借助try函数。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{try}\NormalTok{:}
+\NormalTok{    f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{'Python-Data-Science/file.txt'}\NormalTok{, }\StringTok{'r'}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(f.read())}
+\ControlFlowTok{finally}\NormalTok{:}
+    \ControlFlowTok{if}\NormalTok{ f:}
+\NormalTok{        f.close()}
+\end{Highlighting}
+\end{Shaded}
+
+这句话就可以保证无论是否出错都能正确地关闭文件。
+
+这样太麻烦。所以就引出with语句。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{'Python-Data-Science/file.txt'}\NormalTok{, }\StringTok{'r'}\NormalTok{, encoding}\OperatorTok{=}\StringTok{'gbk'}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
+    \BuiltInTok{print}\NormalTok{(f.read())}
+\end{Highlighting}
+\end{Shaded}
+
+写文件和读文件是一样的，唯一区别是调用open()函数时的参数不同：
+
+\begin{itemize}
+\item
+  传入标识符\texttt{r}或者\texttt{rb}表示写文本文件或写二进制文件
+\item
+  传入标识符\texttt{w}或者\texttt{wb}表示写文本文件或写二进制文件
+\item
+  在open()函数传入encoding参数，将字符串自动转换成指定编码
+\item
+  以'w'模式写入文件时，如果文件已存在，会直接覆盖已有文件
+\item
+  以'a'模式写入文件时，以追加（append）模式写入
+\end{itemize}
+
+    \hypertarget{csv}{%
+\subsection{csv}\label{csv}}
+
+这个需要csv包，或者是pandas
+
+    \hypertarget{ux4e8cux8fdbux5236ux6587ux4ef6}{%
+\subsection{二进制文件}\label{ux4e8cux8fdbux5236ux6587ux4ef6}}
+
+要读取二进制文件，比如图片、视频等等，用\texttt{rb}模式打开文件即可，写入二进制文件，用\texttt{wb}即可。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{'Python-Data-Science/image/lambda.png'}\NormalTok{, }\StringTok{'rb'}\NormalTok{)}
+\NormalTok{f.read()[}\DecValTok{0}\NormalTok{:}\DecValTok{10}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+    \hypertarget{ux6587ux672cux5904ux7406}{%
+\section{文本处理}\label{ux6587ux672cux5904ux7406}}
+
+常见四把斧子。
+
+\begin{itemize}
+\tightlist
+\item
+  Python的字符串属性函数
+\item
+  Python的string模块
+\item
+  re
+\item
+  其他
+\end{itemize}
+
+    \hypertarget{ux5f02ux5e38ux5904ux7406}{%
+\section{异常处理}\label{ux5f02ux5e38ux5904ux7406}}
+
+Python在builtins模块内置了常见的异常，无需特别导入，直接就可使用。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} \PY{k}{try}\PY{p}{:}
+             \PY{n}{a} \PY{o}{=} \PY{l+m+mi}{1} \PY{o}{/} \PY{l+m+mi}{0}
+         \PY{k}{except} \PY{n+ne}{ZeroDivisionError} \PY{k}{as} \PY{n}{e}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{e}\PY{p}{)}
+         \PY{k}{else}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{没有错误}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{k}{finally}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{运行结束。本语句一定会运行。}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+division by zero
+运行结束。本语句一定会运行。
+
+    \end{Verbatim}
+
+    通用异常：Exception
+
+在Python的异常中，有一个通用异常：Exception，它可以捕获任意异常。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{k}{try}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{k}{except} \PY{n+ne}{Exception} \PY{k}{as} \PY{n}{e}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{我去，又出错了。}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{错误提示信息：}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{e}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{。}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+我去，又出错了。
+错误提示信息： division by zero 。
+
+    \end{Verbatim}
+
+    \hypertarget{ux8c03ux8bd5ux4e0eux6d4bux8bd5}{%
+\section{调试与测试}\label{ux8c03ux8bd5ux4e0eux6d4bux8bd5}}
+
+    \hypertarget{ux8c03ux8bd5}{%
+\subsection{调试}\label{ux8c03ux8bd5}}
+
+\begin{itemize}
+\tightlist
+\item
+  print
+\item
+  assert
+\item
+  logging
+\item
+  pdb
+\item
+  IDE
+\end{itemize}
+
+    asert会对后面的表达式进行判断，如果表达式为True，那就什么都不做，程序接着往下走；如果False，那么就会弹出异常。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{k}{def} \PY{n+nf}{myfun}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{p}{:}
+             \PY{k}{assert} \PY{n+nb}{type}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{o}{==}\PY{n+nb}{int}
+             \PY{k}{return} \PY{n}{s}\PY{o}{/}\PY{l+m+mi}{2}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}40}]:} \PY{n}{myfun}\PY{p}{(}\PY{l+m+mi}{18}\PY{p}{)}  \PY{c+c1}{\PYZsh{} 正常运行}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}40}]:} 9.0
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} \PY{n}{myfun}\PY{p}{(}\PY{l+m+mf}{18.0}\PY{p}{)}  \PY{c+c1}{\PYZsh{} 触发错误}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        AssertionError                            Traceback (most recent call last)
+
+        <ipython-input-41-28fb6113b9bb> in <module>()
+    ----> 1 myfun(18.0)  \# 触发错误
+    
+
+        <ipython-input-39-1715a7599229> in myfun(s)
+          1 def myfun(s):
+    ----> 2     assert type(s)==int
+          3     return s/2
+    
+
+        AssertionError: 
+
+    \end{Verbatim}
+
+    \hypertarget{ux6027ux80fdux6d4bux8bd5}{%
+\subsection{性能测试}\label{ux6027ux80fdux6d4bux8bd5}}
+
+Python提供timeit来测试性能。
+
+profile 和 pstats 模块提供了针对更大代码块的性能测试。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{k+kn}{from} \PY{n+nn}{timeit} \PY{k}{import} \PY{n}{timeit}
+         
+         \PY{k}{def} \PY{n+nf}{myfun}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{p}{[}\PY{n}{i} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1000000}\PY{p}{)} \PY{k}{if} \PY{n}{i}\PY{o}{\PYZpc{}}\PY{k}{3}==0]
+\end{Verbatim}
+
+    timeit(函数名\_字符串，运行环境\_字符串，number=运行次数)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}44}]:} \PY{n}{timeit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{myfun()}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{from \PYZus{}\PYZus{}main\PYZus{}\PYZus{} import myfun}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{number}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}44}]:} 0.13829108199999496
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{n}{timeit}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{[i for i in range(1000000) if i}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{3==0]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{number}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}45}]:} 0.13907842400001869
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}46}]:} \PY{o}{\PYZpc{}}\PY{k}{time} myfun()
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Wall time: 62.5 ms
+
+    \end{Verbatim}
+
+    此外还可以使用repeat方法。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ timeit }\ImportTok{import}\NormalTok{ repeat}
+\ControlFlowTok{pass}
+\NormalTok{repeat(}\StringTok{'func()'}\NormalTok{, }\StringTok{'from __main__ import func'}\NormalTok{, number}\OperatorTok{=}\DecValTok{100}\NormalTok{, repeat}\OperatorTok{=}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+    \hypertarget{ux5355ux5143ux6d4bux8bd5}{%
+\subsection{单元测试}\label{ux5355ux5143ux6d4bux8bd5}}
+
+做探索性数据分析的时候很少做单元测试。
+
+跳过。
+
+    \hypertarget{ux6a21ux5757ux4e0eux5305}{%
+\section{模块与包}\label{ux6a21ux5757ux4e0eux5305}}
+
+    \hypertarget{ux6a21ux5757}{%
+\subsection{模块}\label{ux6a21ux5757}}
+
+    \hypertarget{ux5bfcux5165}{%
+\subsubsection{导入}\label{ux5bfcux5165}}
+
+模块主要是以下导入方式。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ xx.xx}
+
+\ImportTok{from}\NormalTok{ xx.xx }\ImportTok{import}\NormalTok{ xx}
+
+\CommentTok{# 给导入的对象重命名}
+\ImportTok{from}\NormalTok{ xx.xx }\ImportTok{import}\NormalTok{ xx }\ImportTok{as}\NormalTok{ newname}
+
+\CommentTok{# 将对象内的所有内容全部导入，容易发生命名冲突，慎用}
+\ImportTok{from}\NormalTok{ xx.xx }\ImportTok{import} \OperatorTok{*}
+\end{Highlighting}
+\end{Shaded}
+
+在导入的时候，需要提供导入对象的绝对路径，也就是``最顶层的包名.次一级包名.模块名.类名.函数名''。
+
+对于xx.xx，想导入到哪个级别，取决于自己需要。
+
+标准库，直接import 模块名，例如\texttt{import\ os}。
+
+    \hypertarget{ux4e3bux6a21ux5757ux548cux975eux4e3bux6a21ux5757}{%
+\subsubsection{主模块和非主模块}\label{ux4e3bux6a21ux5757ux548cux975eux4e3bux6a21ux5757}}
+
+如果一个模块被直接使用，而没有被别人调用，称这个模块为主模块。
+如果一个模块被别人调用，称这个模块为非主模块。
+
+\_\_name\_\_属性值是一个变量，且这个变量是系统给出的。利用这个变量可以判断一个模块是否是主模块。如果一个属性的值是
+\textbf{main} ,那么就说明这个模块是主模块。
+
+    \begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if} \VariableTok{__name__} \OperatorTok{==} \StringTok{'__main__'}\NormalTok{:}
+\NormalTok{    main()}
+\end{Highlighting}
+\end{Shaded}
+
+上面的代码很常见。
+
+在同一目录建立以下代码。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ myfun():}
+    \BuiltInTok{print}\NormalTok{(}\VariableTok{__name__}\NormalTok{)}
+
+\ControlFlowTok{if} \VariableTok{__name__}\OperatorTok{==}\StringTok{'__main__'}\NormalTok{:}
+\NormalTok{    myfun()}
+\end{Highlighting}
+\end{Shaded}
+
+上述代码运行结果：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[Running] python }\StringTok{"f:}\CharTok{\textbackslash{}t}\StringTok{estmain.py"}
+\NormalTok{__main__}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ testmain}
+
+\NormalTok{testmain.myfun()}
+\end{Highlighting}
+\end{Shaded}
+
+上述代码运行结果：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[Running] python }\StringTok{"test.py"}
+\NormalTok{testmain}
+\end{Highlighting}
+\end{Shaded}
+
+testmain是包的名字testmain。
+
+\begin{itemize}
+\item
+  \texttt{if\ \_\_name\_\_\ ==\ \textquotesingle{}\_\_main\_\_\textquotesingle{}}自己调用时\texttt{\_\_name\_\_}为\texttt{\textquotesingle{}\_\_main\_\_\textquotesingle{}}，条件成立，执行if语句中函数
+\item
+  \texttt{if\ \_\_name\_\_\ ==\ \textquotesingle{}\_\_main\_\_\textquotesingle{}}从别的文件调用时\texttt{\_\_name\_\_}为'调用的文件名'，if条件不成立，则不执行。
+\end{itemize}
+
+    \hypertarget{ux5305}{%
+\subsection{包}\label{ux5305}}
+
+包是用以组织模块的另一种层次结构。
+
+包是使用包含文件\texttt{\_\_init\_\_.py}的目录实现的。
+
+    \hypertarget{pipux8f6fux4ef6ux5305ux7ba1ux7406}{%
+\subsection{pip软件包管理}\label{pipux8f6fux4ef6ux5305ux7ba1ux7406}}
+
+\hypertarget{ux5b89ux88c5}{%
+\subsubsection{安装}\label{ux5b89ux88c5}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pip install packageName 下载并安装最新的版本}
+\NormalTok{pip install packageName}\OperatorTok{==}\DecValTok{1}\NormalTok{.}\FloatTok{0.0}\NormalTok{下载并安装指定版本}
+\NormalTok{pip install packageName}\OperatorTok{>=}\DecValTok{1}\NormalTok{.}\FloatTok{0.0}\NormalTok{ 下载并安装至少某个版本以上的版本的包}
+\NormalTok{pip install url }\CommentTok{#从指定网址资源安装}
+\NormalTok{pip install path }\CommentTok{#指定本地位置安装}
+\NormalTok{pip install }\OperatorTok{--}\NormalTok{find}\OperatorTok{-}\NormalTok{links}\OperatorTok{=}\NormalTok{url 从指定url下载安装}
+\NormalTok{pip install }\OperatorTok{--}\NormalTok{find}\OperatorTok{-}\NormalTok{links}\OperatorTok{=}\NormalTok{path 从指定path下载安装}
+\NormalTok{pip install }\OperatorTok{--}\NormalTok{upgrade packageName 更新一个已经安装过的过期模块}
+\end{Highlighting}
+\end{Shaded}
+
+同时安装多个包：python -m pip install --user numpy scipy matplotlib
+ipython jupyter pandas sympy nose
+
+提示安转时缺失包：python --m pip install qtconsole
+
+在Win10
+的ps界面上使用pip需要管理者权限，或者是在命令后面加上\texttt{-\/-user}。
+
+\hypertarget{ux5378ux8f7d}{%
+\subsubsection{卸载}\label{ux5378ux8f7d}}
+
+\begin{verbatim}
+pip uninstall <packageName>
+\end{verbatim}
+
+\hypertarget{ux67e5ux770bux6a21ux5757ux4fe1ux606f}{%
+\subsubsection{查看模块信息}\label{ux67e5ux770bux6a21ux5757ux4fe1ux606f}}
+
+\begin{verbatim}
+pip show <packageName>
+\end{verbatim}
+
+查看pip管理了哪些模块
+
+\begin{verbatim}
+pip list -o  列示过期的包
+pip list -u  列示可以更新到最新包的信息
+\end{verbatim}
+
+pip升级自己
+
+\begin{verbatim}
+python -m pip install --upgrade pip
+\end{verbatim}
+
+查看pip版本：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{PS}\NormalTok{ C:\textbackslash{}Users\textbackslash{}cheng> pip -V}
+\NormalTok{pip 18.}\FunctionTok{0}
+\end{Highlighting}
+\end{Shaded}
+
+此外，pip安装在本地有比较大的缓存文件，可以手动检测并删除。
+
+除了匹配管理包，还可以使用conda。
+
+\hypertarget{pypiux955cux50cf}{%
+\subsection{pypi镜像}\label{pypiux955cux50cf}}
+
+https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
+
+pypi 镜像每 5 分钟同步一次。
+
+临时使用
+
+\begin{verbatim}
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple some-package
+\end{verbatim}
+
+长久使用
+
+找个地方建立pip.ini文件，如\texttt{C:\textbackslash{}Users\textbackslash{}Cheng\textbackslash{}pip\textbackslash{}pip.ini}，文件内容如下：
+
+\begin{verbatim}
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+\end{verbatim}
+
+然后把\texttt{C:\textbackslash{}Users\textbackslash{}Cheng\textbackslash{}pip\textbackslash{}pip.ini}加入到系统环境变量的\texttt{Path}中去。
+
+    \hypertarget{ux6742ux4e03ux6742ux516b}{%
+\section{杂七杂八}\label{ux6742ux4e03ux6742ux516b}}
+
+    \hypertarget{ux4e09ux4e2aux5e38ux7528ux7684ux51fdux6570}{%
+\subsection{三个常用的函数}\label{ux4e09ux4e2aux5e38ux7528ux7684ux51fdux6570}}
+
+\begin{itemize}
+\tightlist
+\item
+  help
+\item
+  type
+\item
+  dir
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}47}]:} \PY{n}{help}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{dir}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Help on built-in function dir in module builtins:
+
+dir({\ldots})
+    dir([object]) -> list of strings
+    
+    If called without an argument, return the names in the current scope.
+    Else, return an alphabetized list of names comprising (some of) the attributes
+    of the given object, and of attributes reachable from it.
+    If the object supplies a method named \_\_dir\_\_, it will be used; otherwise
+    the default dir() logic is used and returns:
+      for a module object: the module's attributes.
+      for a class object:  its attributes, and recursively the attributes
+        of its bases.
+      for any other object: its attributes, its class's attributes, and
+        recursively the attributes of its class's base classes.
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}48}]:} \PY{n+nb}{type}\PY{p}{(}\PY{l+m+mi}{108}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}48}]:} int
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}49}]:} \PY{n}{a}\PY{o}{=}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}
+         \PY{n+nb}{dir}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{5}\PY{p}{:}\PY{p}{:}\PY{p}{]}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}49}]:} ['insert', 'pop', 'remove', 'reverse', 'sort']
+\end{Verbatim}
+            
+    \hypertarget{ux7c7bux578bux63d0ux793a}{%
+\subsection{类型提示}\label{ux7c7bux578bux63d0ux793a}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} \PY{n}{a}\PY{p}{:} \PY{n+nb}{int} \PY{o}{=}\PY{l+m+mi}{99}
+         \PY{n}{b}\PY{p}{:} \PY{n+nb}{bool} \PY{o}{=} \PY{k+kc}{True}
+         \PY{n}{f}\PY{p}{:} \PY{n+nb}{float} \PY{o}{=} \PY{l+m+mf}{1.1}
+         \PY{n}{s}\PY{p}{:} \PY{n+nb}{str} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{abc}\PY{l+s+s2}{\PYZdq{}}
+\end{Verbatim}
+
+    复杂的类型和注解，需要引入标准库typing。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:} \PY{k+kn}{import} \PY{n+nn}{typing}
+         
+         \PY{k}{def} \PY{n+nf}{myfun}\PY{p}{(}\PY{n}{lst}\PY{p}{:} \PY{n}{typing}\PY{o}{.}\PY{n}{List}\PY{p}{[}\PY{n+nb}{int}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}} \PY{n}{typing}\PY{o}{.}\PY{n}{List}\PY{p}{[}\PY{n+nb}{int}\PY{p}{]}\PY{p}{:}
+             \PY{n}{lst} \PY{o}{=} \PY{p}{[}\PY{n}{i}\PY{o}{*}\PY{l+m+mi}{10} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{lst}\PY{p}{]}
+             \PY{k}{return} \PY{n}{lst}
+         
+         \PY{n}{myfun}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}51}]:} [10, 50, 80]
+\end{Verbatim}
+            
+    \hypertarget{ux5173ux952eux5b57}{%
+\subsection{关键字}\label{ux5173ux952eux5b57}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}52}]:} \PY{k+kn}{import} \PY{n+nn}{keyword}
+         \PY{n+nb}{len}\PY{p}{(}\PY{n}{keyword}\PY{o}{.}\PY{n}{kwlist}\PY{p}{)}
+         \PY{n}{keyword}\PY{o}{.}\PY{n}{kwlist}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}52}]:} 35
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}52}]:} ['False',
+          'None',
+          'True',
+          'and',
+          'as',
+          'assert',
+          'async',
+          'await',
+          'break',
+          'class',
+          'continue',
+          'def',
+          'del',
+          'elif',
+          'else',
+          'except',
+          'finally',
+          'for',
+          'from',
+          'global',
+          'if',
+          'import',
+          'in',
+          'is',
+          'lambda',
+          'nonlocal',
+          'not',
+          'or',
+          'pass',
+          'raise',
+          'return',
+          'try',
+          'while',
+          'with',
+          'yield']
+\end{Verbatim}
+            
+    \hypertarget{ux5185ux7f6eux51fdux6570}{%
+\subsection{内置函数}\label{ux5185ux7f6eux51fdux6570}}
+
+在启动Python解释器的时候，内置函数就已经导入到内存当中供我们使用。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}53}]:} \PY{n+nb}{dir}\PY{p}{(}\PY{n}{\PYZus{}\PYZus{}builtins\PYZus{}\PYZus{}}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}53}]:} ['ArithmeticError', 'AssertionError', 'AttributeError']
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}54}]:} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb}{dir}\PY{p}{(}\PY{n}{\PYZus{}\PYZus{}builtins\PYZus{}\PYZus{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}54}]:} 154
+\end{Verbatim}
+            
+    \hypertarget{ux5c0fux6574ux6570ux5bf9ux8c61ux6c60}{%
+\subsection{小整数对象池}\label{ux5c0fux6574ux6570ux5bf9ux8c61ux6c60}}
+
+Python初始化的时候会自动建立一个小整数对象池，范围是-5到256。
+
+例如123，即使我们在程序里没有创建它，其实在Python后台已经悄悄为我们创建了。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}55}]:} \PY{n}{a}\PY{o}{=}\PY{l+m+mi}{123}
+         \PY{n+nb}{id}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{o}{==}\PY{n+nb}{id}\PY{p}{(}\PY{l+m+mi}{123}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}55}]:} True
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}56}]:} \PY{n}{a}\PY{o}{=}\PY{l+m+mi}{1230}
+         \PY{n+nb}{id}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{o}{==}\PY{n+nb}{id}\PY{p}{(}\PY{l+m+mi}{1230}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}56}]:} False
+\end{Verbatim}
+            
+    \hypertarget{isux548c}{%
+\subsection{is和==}\label{isux548c}}
+
+\begin{itemize}
+\item
+  is是比较两个引用是否指向了同一个对象（引用比较）。
+\item
+  ==是比较两个对象是否相等。
+\end{itemize}
+
+    \hypertarget{ux672aux5904ux7406ux77e5ux8bc6ux70b9}{%
+\section{未处理知识点}\label{ux672aux5904ux7406ux77e5ux8bc6ux70b9}}
+
+\begin{itemize}
+\tightlist
+\item
+  线程
+\item
+  进程
+\end{itemize}
+
+这些知识点，因为自己平时用的少，学得也是一般。跳过。
+
+    \hypertarget{ux540eux8bb0}{%
+\section{后记}\label{ux540eux8bb0}}
+
+在刚学习Python就开始记笔记，因为那个时候Visual
+Basic和C长久不用，具体知识点基本遗忘。Python是在这样的背景下，因为有现实的需求，而重拾编程，开始学习的新语言。
+
+一开始的笔记繁杂，几经删改，最后发现没有必要做一个cookbook式的笔记。简单，有体系，方便速览。有事就搜索。
+
+后面有需要，并且有空的时候会对这份笔记进行修订和更新。
+
+
+    
+    
+    
+\end{document}
