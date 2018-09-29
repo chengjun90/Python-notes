@@ -2,9 +2,9 @@
 这是Python 编程基础学习笔记。
 
 # 文件
-- Python-base-note.ipynb
-- Python-base-note.tex
-- Python-base-note.pdf
+- [Python-base-note.ipynb](Python-base-note.ipynb)
+- [Python-base-note.tex](Python-base-note.tex)
+- [Python-base-note.pdf](Python-base-note.pdf)
 
 ipynb文件是便于学习。
 
@@ -16,7 +16,7 @@ pdf是采用XeLaTeX编译。
 ```
 xelatex -output-driver="xdvipdfmx -V 7" Python-base-note.tex
 ```
-这边编译的pdf是1.7版。
+这里编译的pdf是1.7版。
 
 pdf文件中主要是开源的思源宋体。
 
